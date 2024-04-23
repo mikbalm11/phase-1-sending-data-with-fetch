@@ -1,29 +1,33 @@
 // Add your code here
 
 function submitData (userName, userEmail) {
-    const userObj
+    const userObj = {
+        name: userName,
+        email : userEmail
+    };
 
-    fetch("http://localhost:3000/users",{
+    return fetch("http://localhost:3000/users",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            "Accept": "application/json"
         },
-        body: JSON.stringify({
-            name: userName,
-            email : userEmail
-        }),
+        body: JSON.stringify(userObj),
     })
     .then(function (response) {
         return response.json();
     })
-    .then(function (object) {
-        console.log(object);
+    .then(object => {
+        document.body.append(object.id);
+        return object;
     })
     .catch(function (error) {
-        alert("Bad things! Ragnarők!");
-        console.log(error.message);
+        //console.error("Error:", error);
+        const errorMessage = document.createElement('div');
+        errorMessage.innerHTML = error.message;
+        document.body.appendChild(errorMessage);
+        //throw error;
     });
-  };
+}
   
   //submitData("Mustafa Mehmedoglu", "mustafa@somemail.com");
